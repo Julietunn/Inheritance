@@ -66,11 +66,15 @@ public:
 		cout << "HDestructor\t" << this << endl;
 	}
 	//									Methods
-	void info()const
+	virtual std::ostream& info(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << get_age() << endl;
+		return os << last_name << " " << first_name << " " << get_age();
 	}
 };
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.info(os);
+}
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
@@ -139,10 +143,10 @@ public:
 		cout << "SDestructor\t" << this << endl;
 	}
 	//									Methods
-	void info()const
+	std::ostream& info(std::ostream& os)const
 	{
-		Human::info();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+
+		return Human::info(os) << " " << speciality << " " << group << " " << rating << " " << attendance;
 	}
 };
 
@@ -180,10 +184,10 @@ public:
 	{
 		cout << "TDenstructor\t" << this << endl;
 	}
-	void info()const
+	std::ostream& info(std::ostream& os)const
 	{
-		Human::info();
-		cout << speciality << " " << experience << " лет\n" << endl;
+		
+		return Human::info(os) << " " << speciality << " " << experience << " лет";
 	}
 };
 
@@ -209,10 +213,10 @@ public:
 	{
 		cout << "GDenstructor\t" << this << endl;
 	}
-	void info()const
+	std::ostream& info(std::ostream& os)const
 	{
-		Human::info();
-		cout << subject << endl;
+	
+		return Student::info(os)<< " " << subject;
 	}
 };
 
@@ -254,14 +258,12 @@ void main()
 		new Student("Vercetty", "Tomas", 1970, 05, 25, "Criminalistic", "Vice", 90, 95),
 		new Teacher("Diaz", "Ricardo", 1960, 03,03, "Weapons distribution", 20)
 	};
-
-	//char filename[] = "group.txt";
-
+	cout << "\n---------------------------------------------------\n"; 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		group[i]->info();
-		//cout << *group[i] << endl;
-		cout << "\n--------------------------------------------\n";
+		//group[i]->info();
+		cout << *group[i] << endl;
+  		cout << "\n--------------------------------------------\n";
 	}
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
