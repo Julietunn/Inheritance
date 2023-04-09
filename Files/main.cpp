@@ -9,15 +9,17 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef WRITE_TO_FILE
+	//если нужно вводить имя файла с клавиатуры
 	char filename[_MAX_FNAME] = {};
 	cout << "Введите имя файла: "; 
 	cin.getline(filename, _MAX_FNAME);
 	if (strcmp(filename + strlen(filename) - 4, ".txt"))strcat_s(filename, _MAX_FNAME,  ".txt");
 
 	ofstream fout;			//создаем поток
-	fout.open(filename, std::ios_base::app); //открываем поток
+	fout.open(filename, std::ios_base::app); //открываем поток //вторая часть - чтобы дописывать в файле
 	fout << "Hello files" << endl;
 	fout.close();
+	//system("notepad File.txt");
 
 	char sz_command[_MAX_FNAME] = "notepad ";
 	strcat_s(sz_command, _MAX_FNAME, filename);
@@ -29,9 +31,9 @@ void main()
 	fin.open("File.txt");
 	if (fin.is_open())
 	{
-		const int SIZE = 1256;
+		const int SIZE = 1256; //для того, чтобы было куда сохранять введенный текст
 		char sz_buffer[SIZE]{};
-		while (!fin.eof())
+		while (!fin.eof())	  //пока не конец файла
 		{
 			//fin >> sz_buffer;
 			fin.getline(sz_buffer, SIZE);
